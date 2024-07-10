@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 script {
-                    buildImage()
+                    buildImage('zzhoho0110/java-maven-app:jma-1.1.3')
                 }
             }
         }
