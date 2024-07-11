@@ -1,4 +1,3 @@
-@Library('jenkins-shared-library')
 def gv
 
 pipeline {
@@ -14,6 +13,13 @@ pipeline {
                 }
             }
         }
+        stage("increment version") {
+            steps {
+                script {
+                    gv.increment()
+                }
+            }
+        }
         stage("test"){
            steps{
                script {
@@ -22,11 +28,6 @@ pipeline {
            }
         }
         stage("build jar") {
-            when {
-                expression {
-                    env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'jenkins-shared-lib'
-                }
-            }
             steps {
                 script {
                     gv.buildJar()
@@ -34,11 +35,6 @@ pipeline {
             }
         }
         stage("build image") {
-            when {
-                expression {
-                    env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'jenkins-shared-lib'
-                }
-            }
             steps {
                 script {
                     gv.buildImage()
@@ -46,14 +42,16 @@ pipeline {
             }
         }
         stage("deploy") {
-            when {
-                expression {
-                    env.BRANCH_NAME == 'master' ||  env.BRANCH_NAME == 'jenkins-shared-lib'
-                }
-            }
             steps {
                 script {
                     gv.deployApp()
+                }
+            }
+        }
+        stage("commit") {
+            steps {
+                script {
+                    gv.commit()
                 }
             }
         }
