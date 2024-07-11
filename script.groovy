@@ -29,11 +29,11 @@ def buildImage() {
 
 def deployApp() {
     echo 'deploying the application...'
-} 
+}
 
-def commit(){
+def commit() {
     echo "committing the version update..."
-    withCredentials([usernamePassword(credentialsId: '8be61f3a-aed1-464e-8244-003123375044', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]){
+    withCredentials([usernamePassword(credentialsId: '8be61f3a-aed1-464e-8244-003123375044', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
         sh 'git config --global user.email "jenkins@example.com"'
         sh 'git config --global user.name "jenkins"'
 
@@ -41,12 +41,10 @@ def commit(){
         sh 'git branch'
         sh 'git config --list'
 
-        sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/zzhoho0110/java-maven-app.git"
+        sh 'git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/zzhoho0110/java-maven-app.git'
         sh 'git add .'
         sh 'git commit -m "CI: version bump"'
         sh 'git push origin HEAD:jenkins-jobs'
-
-
     }
 }
 
