@@ -1,5 +1,4 @@
-@Library('jenkins-shared-library')
-def gv
+@Library('jenkins-shared-library') _
 
 pipeline {
     agent any
@@ -7,17 +6,10 @@ pipeline {
         maven 'maven-3.9.8'
     }
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
         stage("test"){
            steps{
                script {
-                   gv.test()
+                   test()
                }
            }
         }
@@ -53,7 +45,7 @@ pipeline {
             }
             steps {
                 script {
-                    gv.deployApp()
+                    deployApp()
                 }
             }
         }
