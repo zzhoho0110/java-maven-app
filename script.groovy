@@ -41,7 +41,7 @@ def commit() {
         sh 'git branch'
         sh 'git config --list'
 
-        sh 'git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/zzhoho0110/java-maven-app.git'
+        sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/zzhoho0110/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "CI: version bump"'
         sh 'git push origin HEAD:jenkins-jobs'
