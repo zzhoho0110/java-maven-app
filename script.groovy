@@ -29,10 +29,11 @@ def buildImage() {
 
 
 def deployApp() {
-    def dockerCmd = "docker run -p 8080:8080 -d zzhoho0110/java-maven-app:${IMAGE_NAME}"
+    def dockerPullCmd = "docker pull zzhoho0110/java-maven-app:${IMAGE_NAME}"
+    def dockerRunCmd = "docker run -p 8080:8080 -d zzhoho0110/java-maven-app:${IMAGE_NAME}"
     echo 'deploying the application...'
     sshagent(['ec2-server-key']){
-        sh "ssh -o StrictHostKeyChecking=no ec2-user@57.180.34.187 ${dockerCmd}"
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@57.180.34.187 ${dockerPullCmd} ${dockerRunCmd}"
     }
 }
 
