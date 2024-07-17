@@ -27,8 +27,13 @@ def buildImage() {
     }
 } 
 
+
 def deployApp() {
+    def dockerCmd = "docker run -p 8080:8080 -d zzhoho0110/java-maven-app:${IMAGE_NAME}"
     echo 'deploying the application...'
+    sshagent(['ec2-server-key']){
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@57.180.34.187 ${dockerCmd}"
+    }
 }
 
 def commit() {
@@ -41,7 +46,7 @@ def commit() {
         sh 'git branch'
         sh 'git config --list'
 
-        sh "git remote set-url origin https://${TOKEN}@github.com/zzhoho0110/java-maven-app.git"
+        sh "git remote set-url origin https://${TOKEN}@github.com/${USERNAME}/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "CI: version bump"'
         sh 'git push origin HEAD:jenkins-jobs'
